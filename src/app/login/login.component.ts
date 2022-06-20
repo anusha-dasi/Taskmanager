@@ -1,7 +1,7 @@
 import { LoginService } from './../login.service';
 import { LoginView } from './../login-view';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -9,22 +9,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginView:LoginView= new LoginView();
-  loginError:string= "";
+  loginView: LoginView = new LoginView();
+  loginError: string = "";
 
-  constructor(private loginService:LoginService,private router:Router) { }
+  constructor(private route: ActivatedRoute, private loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
   }
-  onloginClick(event:any)
-  {
+  onloginClick(event: any) {
     this.loginService.Login(this.loginView).subscribe(
-      (response)=>{
-        this.router.navigateByUrl("/dashboard");
+      (response) => {
+        let returnUrl = this.route.snapshot.queryParams['returnUrl'];
+        if (returnUrl == undefined) {
+          this.router.navigateByUrl("/dashboard");
+        }
+        else {
+          this.router.navigateByUrl(returnUrl);
+        }
       },
-      (error)=>{
+      (error) => {
         console.log();
-        this.loginError="Invalid Username or Password";        
+        this.loginError = "Invalid Username or Password";
       },
     )
   }

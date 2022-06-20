@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 export class LoginService {
 
   constructor(private httpClient: HttpClient) { }
-  currentUserName: any = sessionStorage.getItem("userName");
+  currentUserName: any = sessionStorage.getItem("loggedInUser");
 
   public Login(loginView: LoginView): Observable<any> {
     return this.httpClient.post<any>("http://localhost:9090" + "/authenticate", loginView, { responseType: "json" })
@@ -18,7 +18,7 @@ export class LoginService {
         if (user) {
           console.log(user);
           this.currentUserName = user.userName;
-          sessionStorage.setItem("userName", user.userName);
+          sessionStorage.setItem("loggedInUser", user.userName);
           sessionStorage.setItem("currentUser", JSON.stringify(user));
         }
         return user;
