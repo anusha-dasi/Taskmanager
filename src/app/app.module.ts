@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { JwtInterceptorService } from './jwt-interceptor.service';
+import { Jwtinterceptor2Service } from './jwtinterceptor2.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { JwtInterceptorService } from './jwt-interceptor.service';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptorService,
+      useClass: Jwtinterceptor2Service,
       multi: true
     }
   ],
